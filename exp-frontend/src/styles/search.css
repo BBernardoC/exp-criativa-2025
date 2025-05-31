@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  background-color: #ecf8ec;
+  font-family: Georgia, serif;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 20px; /* Espaço entre header, card, input, etc */
+  box-sizing: border-box;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px 20px;
+}
+
+.logo {
+  height: 125px;
+  position: fixed;
+  top: 0px;
+  left: 30px;
+  z-index: 1000;
+}
+.card {
+  display: inline-block;
+  background-color: #f7f7f8;
+  color: #1c1c1e;
+  border-radius: 12px;
+  padding: 3rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-size: 1rem;
+  line-height: 1.5;
+  width: fit-content;
+  max-width: 700px;
+  white-space: pre-wrap;
+  margin: 0 auto;
+  height: auto;
+  min-height: unset;
+}
+
+.card h1 {
+  font-size: 2rem;
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0; /* remove margens externas do parágrafo */
+  text-align: center;
+}
+.button-container {
+  margin-top: 10px;
+}
+
+.duvida-button {
+  background-color: #e8c7eb;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  justify-content: center;
+  text-align: center;
+}
+
+.footer-aviso {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.footer a {
+  color: #000;
+  text-decoration: none;
+}

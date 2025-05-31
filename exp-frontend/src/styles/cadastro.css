@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ecf8ec;
+}
+
+.container {
+  text-align: center;
+  padding: 0 20px;
+}
+
+header {
+  text-align: left;
+  padding: 10px 20px;
+}
+
+.logo {
+  height: 125px;
+  position: fixed;
+  top: 0px;
+  left: 30px;
+  z-index: 1000;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* ocupa toda a altura da tela */
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px;
+}
+
+input {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #ffffff;
+  color: #000;
+  font-size: 1rem;
+  width: 220px;
+}
+
+.doencas p {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.botoes-doencas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.disease-button {
+  flex: 1 1 22%;
+  min-width: 150px;
+  max-width: 200px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #7bd972;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.disease-button:hover {
+  background-color: #5fc957;
+}
+
+.arrow-container {
+  margin-top: 30px;
+}
+
+.arrow-button {
+  font-size: 1.5rem;
+  background-color: #cfe8cf;
+  border: none;
+  border-radius: 50%;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.footer-aviso {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+footer a {
+  color: #000;
+  text-decoration: none;
+}
