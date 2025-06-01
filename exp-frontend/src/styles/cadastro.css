@@ -1,50 +1,33 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #ecf8ec;
-}
-
-.container {
+.screen_container {
   text-align: center;
   padding: 0 20px;
 }
 
-header {
-  text-align: left;
-  padding: 10px 20px;
-}
-
-.logo {
-  height: 125px;
-  position: fixed;
-  top: 0px;
-  left: 30px;
-  z-index: 1000;
-}
-
-main {
+.main_container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* ocupa toda a altura da tela */
+  min-height: 100vh;
   padding: 20px 0;
   box-sizing: border-box;
 }
-h1 {
-  font-size: 2rem;
+
+.screen_title {
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
+  font-family: "Libre Baskerville", serif;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-bottom: 20px;
 }
 
 .inputs {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 1.5vh;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -61,10 +44,20 @@ input {
   width: 220px;
 }
 
+.doencas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin-top: 4vh;
+}
+
 .doencas p {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   margin-bottom: 10px;
 }
+
 .botoes-doencas {
   display: flex;
   flex-wrap: wrap;
@@ -93,7 +86,7 @@ input {
 }
 
 .arrow-container {
-  margin-top: 30px;
+  margin-top: 5vh;
 }
 
 .arrow-button {
@@ -105,6 +98,10 @@ input {
   cursor: pointer;
 }
 
+.arrow-button:hover {
+  background-color: #adbbad;
+}
+
 footer {
   margin-top: 10px;
   font-size: 0.9rem;
@@ -114,9 +111,18 @@ footer {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  font-size: 1.3vw;
+  font-family: "Libre Baskerville", serif;
 }
 
 footer a {
   color: #000;
   text-decoration: none;
+}
+
+.login-link {
+  color: #4b5e40;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-decoration: underline;
 }

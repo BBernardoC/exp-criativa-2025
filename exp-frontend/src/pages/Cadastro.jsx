@@ -3,30 +3,43 @@ import React from "react";
 import "../styles/cadastro.css";
 import InputField from "../components/InputField";
 import DiseaseButton from "../components/DiseaseButton";
-import logo from "../public/logo.png"; // Certifique-se de que o caminho está correto
-const diseases = [
-  "Alzheimer",
-  "AVC",
-  "Osteoporose",
-  "Dor Lombar",
-  "Hipertensão",
-  "Colesterol Alto",
-  "Diabetes tipo 2",
-  "Refluxo",
-  "Pneumonia",
-  "Asma",
-  "Desnutrição",
-];
+import logo from "../public/logo.png"; 
 
 export default function Cadastro() {
-  return (
-    <div className="container">
-      <header>
-        <img src={logo} alt="Logo Remédio Claro" className="logo" />
-      </header>
+  const diseases = [
+    "Alzheimer",
+    "AVC",
+    "Osteoporose",
+    "Dor Lombar",
+    "Hipertensão",
+    "Colesterol Alto",
+    "Diabetes tipo 2",
+    "Refluxo",
+    "Pneumonia",
+    "Asma",
+    "Desnutrição",
+  ];
 
-      <main>
-        <h1>Welcome!</h1>
+  const handleCadastro = () => {
+    const name = document.querySelector('input[placeholder="Digite seu nome aqui"]').value;
+    const age = document.querySelector('input[placeholder="Digite sua idade aqui"]').value;
+    const email = document.querySelector('input[placeholder="Digite seu email aqui"]').value;
+    const password = document.querySelector('input[placeholder="Digite sua senha aqui"]').value;
+
+    if (!name || !age || !email || !password) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    window.location.href = "/search";
+  }
+
+  return (
+    <div className="screen_container">
+        <img src={logo} alt="Logo Remédio Claro" className="logo" />
+
+      <div className="main_container">
+        <h1 className="screen_title">Welcome!</h1>
         <p className="subtitle">
           Nos conte mais sobre você e quais são suas principais dificuldades e
           problemas!
@@ -49,9 +62,7 @@ export default function Cadastro() {
         </div>
 
         <div className="arrow-container">
-          <Link to="/search" className="link">
-            <button className="arrow-button">➔</button>
-          </Link>
+            <button className="arrow-button" onClick={handleCadastro}>➔</button>
         </div>
 
         <footer>
@@ -59,11 +70,11 @@ export default function Cadastro() {
             <a href="#">Aviso Legal</a>
           </div>
           <br />
-          <Link to="/" className="link">
-            fazer login
-          </Link>
+          <a href="/" className="login-link">
+            Voltar para página de login
+          </a>
         </footer>
-      </main>
+      </div>
     </div>
   );
 }
