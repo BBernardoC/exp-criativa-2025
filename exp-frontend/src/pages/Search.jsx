@@ -6,8 +6,11 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 function Search() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [AIText, setAIText] = useState("");
+  const [username, setUsername] = useState("Luis Mathias Rivabem Filho"); //TODO: Pegar username do back
 
   const handleSearch = () => {
+    mockAIResponse();
     const query = document.querySelector('input[placeholder="Digite Aqui Sua Dúvida"]').value;
 
     if (!query) {
@@ -16,6 +19,10 @@ function Search() {
     }
 
     //TODO: Implementar a lógica do gepeto
+  }
+
+  const mockAIResponse = () => {
+    setAIText("Se você tomar uma dose maior do que a recomendada de paracetamol, pode causar dano grave ao fígado, que pode levar à falência hepática e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir náusea, dor abdominal, pele amarelada e confusão. Procure ajuda médica urgente se isso acontecer.Se você tomar uma dose maior do que a recomendada de paracetamol, pode causar dano grave ao fígado, que pode levar à falência hepática e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir náusea, dor abdominal, pele amarelada e confusão. Procure ajuda médica urgente se isso acontecer.Se você tomar uma dose maior do que a recomendada de paracetamol, pode causar dano grave ao fígado, que pode levar à falência hepática e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir náusea, dor abdominal, pele amarelada e confusão. Procure ajuda médica urgente se isso acontecer.")
   }
 
   return (
@@ -30,38 +37,31 @@ function Search() {
 
           <img src={logo} alt="Logo" className="logo" />
 
+      {AIText ? (
         <div className="card">
           <h1>
             {/* Colocar aqui o titulo retornado pelo gepeto */}
             Problemas Paracetamol</h1>
           <p>
-            {/* TODO: Colocar aqui a variavel de texto retornada pelo gepeto */}
-            Se você tomar uma dose maior do que a recomendada de paracetamol,
-            pode causar dano grave ao fígado, que pode levar à falência hepática
-            e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir
-            náusea, dor abdominal, pele amarelada e confusão. Procure ajuda
-            médica urgente se isso acontecer.
-            Se você tomar uma dose maior do que a recomendada de paracetamol,
-            pode causar dano grave ao fígado, que pode levar à falência hepática
-            e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir
-            náusea, dor abdominal, pele amarelada e confusão. Procure ajuda
-            médica urgente se isso acontecer.
-            Se você tomar uma dose maior do que a recomendada de paracetamol,
-            pode causar dano grave ao fígado, que pode levar à falência hepática
-            e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir
-            náusea, dor abdominal, pele amarelada e confusão. Procure ajuda
-            médica urgente se isso acontecer.
-            Se você tomar uma dose maior do que a recomendada de paracetamol,
-            pode causar dano grave ao fígado, que pode levar à falência hepática
-            e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir
-            náusea, dor abdominal, pele amarelada e confusão. Procure ajuda
-            médica urgente se isso acontecer.
-            
+            {AIText}
           </p>
         </div>
+      ) : (
+        <div>
+        <h1 className="welcome-message">
+          Bem Vindo {username}!
+        </h1>
+        <h2 className="subtitle-text">Como podemos ajudar sua saúde hoje</h2>
+        </div>
+      )}
+        
 
-        <div className="search-container">
-          <input type="text" placeholder="Digite Aqui Sua Dúvida" className="search-input" />
+        <div className="search-container"
+          style={{ backgroundColor: AIText ? "#e8c7eb" : "#61d747" }}
+          >
+          <input type="text" placeholder="Digite Aqui Sua Dúvida" className="search-input" 
+          style={{ backgroundColor: AIText ? "#e8c7eb" : "#61d747" }}
+          />
           <AutoAwesomeIcon onClick={handleSearch} />
         </div>
 
