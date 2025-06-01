@@ -1,16 +1,17 @@
-import { Link } from "react-router-dom";
 import logo from "../public/logo.png";
 import React, { useState } from "react";
+import SnackbarError from "../components/SnackbarError";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin =() => {
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
 
     if (email === "" || senha === "") {
-      alert("Preencha todos os campos.");
+      setErrorMessage("Preencha todos os campos.");
       return;
     }
 
@@ -24,6 +25,11 @@ export default function Login() {
 
   return (
     <>
+      <SnackbarError
+        error={errorMessage}
+        onClose={() => setErrorMessage("")}
+      />
+
       <img src={logo} alt="Logo" className="logo" />
 
       <div className="login_container">

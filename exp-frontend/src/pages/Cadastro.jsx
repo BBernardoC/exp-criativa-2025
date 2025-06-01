@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
 import "../styles/cadastro.css";
-import InputField from "../components/InputField";
 import DiseaseButton from "../components/DiseaseButton";
 import logo from "../public/logo.png"; 
+import SnackbarError from "../components/SnackbarError";
 
 export default function Cadastro() {
+  const [errorMessage, setErrorMessage] = useState("");
   const diseases = [
     "Alzheimer",
     "AVC",
@@ -27,7 +27,7 @@ export default function Cadastro() {
     const password = document.querySelector('input[placeholder="Digite sua senha aqui"]').value;
 
     if (!name || !age || !email || !password) {
-      alert("Por favor, preencha todos os campos.");
+      setErrorMessage("Por favor, preencha todos os campos.");
       return;
     }
 
@@ -36,6 +36,12 @@ export default function Cadastro() {
 
   return (
     <div className="screen_container">
+
+      <SnackbarError
+        error={errorMessage}
+        onClose={() => setErrorMessage("")}
+      />
+
         <img src={logo} alt="Logo Remédio Claro" className="logo" />
 
       <div className="main_container">
@@ -46,10 +52,10 @@ export default function Cadastro() {
         </p>
 
         <div className="inputs">
-          <InputField placeholder="Digite seu nome aqui" />
-          <InputField placeholder="Digite sua idade aqui" />
-          <InputField placeholder="Digite seu email aqui" />
-          <InputField placeholder="Digite sua senha aqui" type="password" />
+          <input type="text" placeholder="Digite seu nome aqui" />
+          <input type="text" placeholder="Digite sua idade aqui" />
+          <input type="email" placeholder="Digite seu email aqui" />
+          <input type="password" placeholder="Digite sua senha aqui"/>
         </div>
 
         <div className="doencas">

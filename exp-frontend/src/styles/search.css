@@ -1,7 +1,6 @@
 body {
   margin: 0;
   background-color: #ecf8ec;
-  font-family: Georgia, serif;
 }
 
 .page-container {
@@ -9,68 +8,81 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  gap: 20px; /* Espaço entre header, card, input, etc */
+  gap: 20px;
   box-sizing: border-box;
 }
 
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  padding: 10px 20px;
-}
-
-.logo {
-  height: 125px;
-  position: fixed;
-  top: 0px;
-  left: 30px;
-  z-index: 1000;
-}
 .card {
   display: inline-block;
-  background-color: #f7f7f8;
+  background-color: #efc4f3c7;
   color: #1c1c1e;
   border-radius: 12px;
-  padding: 3rem 1.25rem;
+  padding: 4rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  font-size: 1rem;
-  line-height: 1.5;
   width: fit-content;
-  max-width: 700px;
+  width: 50vw;
   white-space: pre-wrap;
   margin: 0 auto;
   height: auto;
   min-height: unset;
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d1d1 transparent;
 }
 
 .card h1 {
   font-size: 2rem;
-  margin: 0 0 12px;
-  text-align: center;
+  text-align: left;
+  margin-top: -1vh;
+  margin-bottom: 3vh;
+  font-family: "Libre Baskerville", serif;
 }
 
 .card p {
-  font-size: 1rem;
+  font-size: 1.4rem;
   line-height: 1.5;
-  margin: 0; /* remove margens externas do parágrafo */
-  text-align: center;
+  margin: 0;
+  text-align: left;
 }
+
 .button-container {
   margin-top: 10px;
 }
 
-.duvida-button {
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
   background-color: #e8c7eb;
-  color: white;
-  border: none;
+  color: black;
   border-radius: 30px;
-  padding: 15px 30px;
+  padding: 10px 10px;
+  padding-right: 25px;
   font-size: 1rem;
   cursor: pointer;
-  font-weight: bold;
-  justify-content: center;
   text-align: center;
+  margin-top: 10px;
+  bottom: 80px;
+  z-index: 100;
+}
+
+.search-input {
+  background-color: #e8c7eb;
+  color: black;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  width: 100%;
 }
 
 .footer-aviso {
