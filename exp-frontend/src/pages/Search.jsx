@@ -31,8 +31,11 @@ function Search() {
           <img src={logo} alt="Logo" className="logo" />
 
         <div className="card">
-          <h1>Problemas Paracetamol</h1>
+          <h1>
+            {/* Colocar aqui o titulo retornado pelo gepeto */}
+            Problemas Paracetamol</h1>
           <p>
+            {/* TODO: Colocar aqui a variavel de texto retornada pelo gepeto */}
             Se você tomar uma dose maior do que a recomendada de paracetamol,
             pode causar dano grave ao fígado, que pode levar à falência hepática
             e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir
