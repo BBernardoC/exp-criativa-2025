@@ -1,29 +1,54 @@
 import { Link } from "react-router-dom";
-import logo from "../public/logo.png"; // Certifique-se de que o caminho está correto
+import logo from "../public/logo.png";
+import React, { useState } from "react";
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin =() => {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (email === "" || senha === "") {
+      alert("Preencha todos os campos.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    //TODO: Adicionar chamada da API aqui
+    
+    window.location.href = "/search";
+    setIsLoading(false);
+  }
+
   return (
     <>
       <img src={logo} alt="Logo" className="logo" />
 
-      <div className="login">
-        <h1 className="h1">Login</h1>
-        <input type="email" id="email" placeholder="email" className="input" />
+      <div className="login_container">
+        <h1 className="login_title">Login</h1>
+
+        <input type="email" id="email" placeholder="email" className="input_style" />
         <input
           type="password"
           id="senha"
           placeholder="senha"
-          className="input"
+          className="input_style"
         />
-        <p>
-          Ainda não possui cadastro?{" "}
-          <Link to="/cadastro" className="link">
-            clique aqui
-          </Link>
+
+        <p className="link_cadastro">
+          Ainda não possui cadastro?
+          <a href="/cadastro">
+            Clique aqui.
+            </a>
         </p>
-        <Link to="/search" className="link">
-          <button className="botao">Entrar</button>
-        </Link>
+
+          <button className="botao"
+          onClick={handleLogin}
+          >
+            {isLoading ? "Entrando..." : "Entrar"}
+            </button>
       </div>
     </>
   );
