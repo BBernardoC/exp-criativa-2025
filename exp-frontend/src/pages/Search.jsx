@@ -7,10 +7,10 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 function Search() {
   const [errorMessage, setErrorMessage] = useState("");
   const [AIText, setAIText] = useState("");
+  const [AITitle, setAITitle] = useState(""); 
   const [username, setUsername] = useState("Luis Mathias Rivabem Filho"); //TODO: Pegar username do back
 
-  const handleSearch = () => {
-    mockAIResponse();
+  const handleSearch = async() => {
     const query = document.querySelector('input[placeholder="Digite Aqui Sua Dúvida"]').value;
 
     if (!query) {
@@ -18,11 +18,29 @@ function Search() {
       return;
     }
 
-    //TODO: Implementar a lógica do gepeto
-  }
+    try {
+      const response = await fetch('http://localhost:3001/api/gemini-chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: query }) // Envia a consulta como 'prompt'
+      });
 
-  const mockAIResponse = () => {
-    setAIText("Se você tomar uma dose maior do que a recomendada de paracetamol, pode causar dano grave ao fígado, que pode levar à falência hepática e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir náusea, dor abdominal, pele amarelada e confusão. Procure ajuda médica urgente se isso acontecer.Se você tomar uma dose maior do que a recomendada de paracetamol, pode causar dano grave ao fígado, que pode levar à falência hepática e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir náusea, dor abdominal, pele amarelada e confusão. Procure ajuda médica urgente se isso acontecer.Se você tomar uma dose maior do que a recomendada de paracetamol, pode causar dano grave ao fígado, que pode levar à falência hepática e até à morte, mesmo sem sintomas imediatos. Os sinais podem incluir náusea, dor abdominal, pele amarelada e confusão. Procure ajuda médica urgente se isso acontecer.")
+      const data = await response.json();
+      console.log('Resposta da API:', data);
+
+      if (data.error) {
+        setErrorMessage(data.error);
+      } else {
+        setAITitle(data.title || "Resultado da Sua Dúvida"); // Define AITitle com o título retornado
+        setAIText(data.text);
+      }
+
+    } catch (error) {
+      console.error('Erro ao chamar o backend:', error);
+      setErrorMessage('Erro ao consultar o backend.');
+    }
   }
 
   return (
@@ -40,8 +58,8 @@ function Search() {
       {AIText ? (
         <div className="card">
           <h1>
-            {/* Colocar aqui o titulo retornado pelo gepeto */}
-            Problemas Paracetamol</h1>
+            {AITitle} {/* Exibe AITitle dinâmico */}
+          </h1>
           <p>
             {AIText}
           </p>
@@ -54,12 +72,11 @@ function Search() {
         <h2 className="subtitle-text">Como podemos ajudar sua saúde hoje</h2>
         </div>
       )}
-        
 
         <div className="search-container"
           style={{ backgroundColor: AIText ? "#e8c7eb" : "#61d747" }}
           >
-          <input type="text" placeholder="Digite Aqui Sua Dúvida" className="search-input" 
+          <input type="text" placeholder="Digite Aqui Sua Dúvida" className="search-input"
           style={{ backgroundColor: AIText ? "#e8c7eb" : "#61d747" }}
           />
           <AutoAwesomeIcon onClick={handleSearch} />
