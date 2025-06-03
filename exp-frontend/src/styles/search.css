@@ -20,12 +20,13 @@ body {
   padding: 4rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   width: fit-content;
-  width: 50vw;
+  width: 55vw;
   white-space: pre-wrap;
   margin: 0 auto;
+  margin-bottom: 90px;
   height: auto;
   min-height: unset;
-  max-height: 50vh;
+  max-height: 55vh;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
@@ -86,6 +87,10 @@ body {
 
 .search-input::placeholder {
   color: black;
+}
+
+.search-input.loading::placeholder {
+  color: white;
 }
 
 .footer-aviso {
