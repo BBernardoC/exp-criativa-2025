@@ -1,6 +1,6 @@
 import { db } from "../../model/db.js";
 import jwt from 'jsonwebtoken';
-import { SECRET_KEY, JWT_EXPIRES_IN } from '../../config/jwt.config.js';
+import { SECRET_KEY, JWT_EXPIRES_IN } from '../../config/jwt_config.js';
 
 export const login = (req, res) => {
     const { user_email, user_password } = req.body;
@@ -18,7 +18,7 @@ export const login = (req, res) => {
         
         const user = result[0];
         const token = jwt.sign(
-            { userId: user.id, email: user.user_email },
+            { userId: user.user_id, email: user.user_email },
             SECRET_KEY,
             { expiresIn: JWT_EXPIRES_IN }
         );

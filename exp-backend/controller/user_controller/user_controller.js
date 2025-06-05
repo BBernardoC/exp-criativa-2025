@@ -23,7 +23,7 @@ export const createUser = (req, res) => {
 }   
 
 export const getUserInfo = (req, res) => {
-    const query = "SELECT user_name FROM users WHERE id = ?";
+    const query = "SELECT user_name FROM users WHERE user_id = ?";
     
     db.query(query, [req.userId], (err, result) => {
         if (err) {
