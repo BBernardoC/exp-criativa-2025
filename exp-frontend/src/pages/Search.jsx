@@ -24,7 +24,7 @@ function Search() {
 
     const fetchUsername = async () => {
       try {
-        const response = await fetch("http://localhost:3000/user-info", {
+        const response = await fetch("http://localhost:8080/api/users/info", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
