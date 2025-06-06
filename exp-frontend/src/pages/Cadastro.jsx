@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "../styles/cadastro.css";
 import DiseaseButton from "../components/DiseaseButton";
-import logo from "../public/logo.png"; 
+import logo from "../public/logo.png";
 import SnackbarError from "../components/SnackbarError";
 
 export default function Cadastro() {
@@ -20,29 +20,65 @@ export default function Cadastro() {
     "Desnutrição",
   ];
 
-  const handleCadastro = () => {
-    const name = document.querySelector('input[placeholder="Digite seu nome aqui"]').value;
-    const age = document.querySelector('input[placeholder="Digite sua idade aqui"]').value;
-    const email = document.querySelector('input[placeholder="Digite seu email aqui"]').value;
-    const password = document.querySelector('input[placeholder="Digite sua senha aqui"]').value;
+  const handleCadastro = async () => {
+    const name = document.querySelector(
+      'input[placeholder="Digite seu nome aqui"]'
+    ).value;
+    const age = document.querySelector(
+      'input[placeholder="Digite sua idade aqui"]'
+    ).value;
+    const email = document.querySelector(
+      'input[placeholder="Digite seu email aqui"]'
+    ).value;
+    const password = document.querySelector(
+      'input[placeholder="Digite sua senha aqui"]'
+    ).value;
+
+    // Obter as doenças selecionadas
+    const selectedDiseases = Array.from(
+      document.querySelectorAll(".disease-button.selected")
+    )
+      .map((el) => el.innerText)
+      .join(", "); // envia como string separada por vírgulas
 
     if (!name || !age || !email || !password) {
       setErrorMessage("Por favor, preencha todos os campos.");
       return;
     }
 
-    window.location.href = "/search";
-  }
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_name: name,
+          user_age: age,
+          user_dissease: selectedDiseases,
+          user_email: email,
+          user_password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao cadastrar usuário.");
+      }
+
+      // Redireciona em caso de sucesso
+      window.location.href = "/search";
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
+  };
 
   return (
     <div className="screen_container">
+      <SnackbarError error={errorMessage} onClose={() => setErrorMessage("")} />
 
-      <SnackbarError
-        error={errorMessage}
-        onClose={() => setErrorMessage("")}
-      />
-
-        <img src={logo} alt="Logo Remédio Claro" className="logo" />
+      <img src={logo} alt="Logo Remédio Claro" className="logo" />
 
       <div className="main_container">
         <h1 className="screen_title">Welcome!</h1>
@@ -55,7 +91,7 @@ export default function Cadastro() {
           <input type="text" placeholder="Digite seu nome aqui" />
           <input type="text" placeholder="Digite sua idade aqui" />
           <input type="email" placeholder="Digite seu email aqui" />
-          <input type="password" placeholder="Digite sua senha aqui"/>
+          <input type="password" placeholder="Digite sua senha aqui" />
         </div>
 
         <div className="doencas">
@@ -68,7 +104,9 @@ export default function Cadastro() {
         </div>
 
         <div className="arrow-container">
-            <button className="arrow-button" onClick={handleCadastro}>➔</button>
+          <button className="arrow-button" onClick={handleCadastro}>
+            ➔
+          </button>
         </div>
 
         <footer>

@@ -10,10 +10,44 @@ function Search() {
   const [errorMessage, setErrorMessage] = useState("");
   const [AIText, setAIText] = useState("");
   const [AITitle, setAITitle] = useState("");
-  const [username, setUsername] = useState("Luis Mathias Rivabem Filho"); //TODO: Pegar username do back
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+  // Verifica autenticação e busca nome do usuário
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/"; // Redireciona se não estiver logado
+      return;
+    }
+
+    const fetchUsername = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/user-info", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Erro ao buscar nome do usuário.");
+        }
+
+        setUsername(data.user_name);
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        setErrorMessage("Erro ao carregar informações do usuário.");
+      }
+    };
+
+    fetchUsername();
+  }, []);
+
+  // Faz consulta ao Gemini
   const handleSearch = async () => {
     if (!inputValue) {
       setErrorMessage("Nada digitado.");
@@ -30,22 +64,22 @@ function Search() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: inputValue }), // Envia a consulta como 'prompt'
+        body: JSON.stringify({ prompt: inputValue }),
       });
 
       const data = await response.json();
-      console.log("Resposta da API:", data);
       setLoading(false);
 
       if (data.error) {
         setErrorMessage(data.error);
       } else {
-        setAITitle(data.title || "Resultado da Sua Dúvida"); // Define AITitle com o título retornado
+        setAITitle(data.title || "Resultado da Sua Dúvida");
         setAIText(data.text);
       }
     } catch (error) {
       console.error("Erro ao chamar o backend:", error);
       setErrorMessage("Erro ao consultar o backend.");
+      setLoading(false);
     }
   };
 
@@ -67,16 +101,14 @@ function Search() {
           </div>
         ) : AIText ? (
           <div className="card">
-            <h1>
-              {AITitle} {/* Exibe AITitle dinâmico */}
-            </h1>
+            <h1>{AITitle}</h1>
             <p>{AIText}</p>
           </div>
         ) : (
           <div>
-            <h1 className="welcome-message">Bem Vindo {username}!</h1>
+            <h1 className="welcome-message">Bem-vindo {username}!</h1>
             <h2 className="subtitle-text">
-              Como podemos ajudar sua saúde hoje
+              Como podemos ajudar sua saúde hoje?
             </h2>
           </div>
         )}
