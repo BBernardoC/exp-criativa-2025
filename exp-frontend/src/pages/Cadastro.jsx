@@ -6,6 +6,8 @@ import SnackbarError from "../components/SnackbarError";
 
 export default function Cadastro() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setShowModal] = useState(false); // 👈 novo estado para o modal
+
   const diseases = [
     "Alzheimer",
     "AVC",
@@ -34,12 +36,11 @@ export default function Cadastro() {
       'input[placeholder="Digite sua senha aqui"]'
     ).value;
 
-    // Obter as doenças selecionadas
     const selectedDiseases = Array.from(
       document.querySelectorAll(".disease-button.selected")
     )
       .map((el) => el.innerText)
-      .join(", "); // envia como string separada por vírgulas
+      .join(", ");
 
     if (!name || !age || !email || !password) {
       setErrorMessage("Por favor, preencha todos os campos.");
@@ -49,9 +50,7 @@ export default function Cadastro() {
     try {
       const response = await fetch("http://localhost:8080/api/users/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_name: name,
           user_age: age,
@@ -62,12 +61,9 @@ export default function Cadastro() {
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(data.error || "Erro ao cadastrar usuário.");
-      }
 
-      // Redireciona em caso de sucesso
       window.location.href = "/search";
     } catch (err) {
       setErrorMessage(err.message);
@@ -77,7 +73,6 @@ export default function Cadastro() {
   return (
     <div className="screen_container">
       <SnackbarError error={errorMessage} onClose={() => setErrorMessage("")} />
-
       <img src={logo} alt="Logo Remédio Claro" className="logo" />
 
       <div className="main_container">
@@ -111,7 +106,15 @@ export default function Cadastro() {
 
         <footer>
           <div className="footer-aviso">
-            <a href="#">Aviso Legal</a>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+              }}
+            >
+              Aviso Legal
+            </a>
           </div>
           <br />
           <a href="/" className="login-link">
@@ -119,6 +122,23 @@ export default function Cadastro() {
           </a>
         </footer>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Aviso Legal</h2>
+            <p>
+              As informações fornecidas por este aplicativo têm caráter
+              educativo e não substituem o acompanhamento médico profissional.
+              Sempre consulte um profissional de saúde qualificado.
+            </p>
+            <button onClick={() => setShowModal(false)} className="close-modal">
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
