@@ -13,6 +13,20 @@ function Search() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+
+  function formatarComNegrito(texto) {
+    return texto
+      .split('\n')
+      .map((linha) => {
+        let formatada = linha.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        formatada = formatada.replace(/^\s*\*\s*/, '• ');
+        return formatada;
+      })
+      .join('<br>');
+  }
+
 
   // Verifica autenticação e busca nome do usuário
   useEffect(() => {
@@ -51,6 +65,38 @@ function Search() {
   const handleSearch = async () => {
     if (!inputValue) {
       setErrorMessage("Nada digitado.");
+      return;
+    }
+
+    // Validação de tema permitido
+    const termoPermitido = (text) => {
+    const texto = text.toLowerCase();
+
+    // Lista de palavras-chave médicas e nomes genéricos
+    const termosChave = [
+      "remédio", "remedios", "medicamento", "medicamentos",
+      "bula", "tarja preta", "dosagem", "efeito colateral",
+      "interação", "contraindicação", "genérico", "farmácia", "tratamento",
+      "para que serve", "como tomar", "serve para", "efeitos colaterais", "posologia"
+    ];
+
+    const nomesComuns = [
+      "dipirona", "paracetamol", "ibuprofeno", "amoxicilina", "azitromicina",
+      "omeprazol", "nimesulida", "losartana", "dorflex", "cetirizina", "clonazepam",
+      "rivotril", "metformina", "allegra", "loratadina"
+    ];
+
+    const padraoFarmaco = /\b[a-z]{5,}(ina|ol|am|azol|pril|pam|cilina|metina|cetina)\b/; // sufixos comuns de remédios
+
+    const matchTermos = termosChave.some((termo) => texto.includes(termo));
+    const matchNome = nomesComuns.some((nome) => texto.includes(nome));
+    const matchPadrao = padraoFarmaco.test(texto);
+
+    return matchTermos || matchNome || matchPadrao;
+  };
+
+    if (!termoPermitido(inputValue)) {
+      setErrorMessage("O sistema responde apenas perguntas sobre medicamentos ou remédios.");
       return;
     }
 
@@ -102,7 +148,7 @@ function Search() {
         ) : AIText ? (
           <div className="card">
             <h1>{AITitle}</h1>
-            <p>{AIText}</p>
+             <p dangerouslySetInnerHTML={{ __html: formatarComNegrito(AIText) }} />
           </div>
         ) : (
           <div>
@@ -145,10 +191,28 @@ function Search() {
       </div>
 
       <footer className="footer-aviso">
-        <a href="#">Aviso Legal</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); setShowModal(true); }}>
+          Aviso Legal
+        </a>
       </footer>
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Aviso Legal</h2>
+            <p>
+              As informações fornecidas por este sistema são geradas por inteligência artificial e destinam-se apenas a fins informativos e educacionais.
+              Elas <strong>não substituem orientação médica profissional, diagnóstico ou tratamento</strong>.
+              Sempre consulte um profissional de saúde qualificado para qualquer dúvida relacionada à sua saúde ou medicação.
+            </p>
+            <button onClick={() => setShowModal(false)}>Fechar</button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
+
+
 
 export default Search;
