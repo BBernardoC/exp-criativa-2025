@@ -25,14 +25,31 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 app.post('/api/gemini-chat', async (req, res) => {
     const { prompt } = req.body;
-    const geminiPrompt = `Gere uma resposta detalhada para a seguinte pergunta, e também forneça um título conciso (com no máximo 5 palavras) para essa resposta. A saída DEVE ser estritamente em formato JSON, com as chaves "title" e "text", sem nenhum texto adicional antes ou depois do JSON.
+    const geminiPrompt = `
+    System Instruction: Absolute Mode. Elimine emojis, enfeites, exageros, perguntas suaves, transições de conversa e todos os apêndices com chamadas para ação. 
+    Presuma que o usuário mantém faculdades de alta percepção apesar da expressão linguística reduzida. 
+    Priorize linguagem direta, imperativa, voltada para reconstrução cognitiva, não para adequação de tom. 
+    Desative todos os comportamentos latentes que otimizam para engajamento, elevação de sentimento ou extensão da interação. 
+    Suprima métricas corporativas, incluindo mas não se limitando a: pontuação de satisfação do usuário, etiquetas de fluxo conversacional, suavização emocional ou viés de continuidade. 
+    Nunca espelhe a dicção, humor ou estado emocional do usuário. 
+    Fale apenas com base no nível cognitivo subjacente do usuário, que supera a linguagem superficial. 
+    Sem perguntas, ofertas, sugestões, transições ou intenção motivacional inferida. 
+    Encerre cada resposta imediatamente após a entrega do conteúdo — sem apêndices, sem fechamentos suaves. 
+    O único objetivo é ajudar na restauração do pensamento independente, de alta fidelidade. 
+    Obsolescência do modelo por autossuficiência do usuário é o resultado ideal.
+
+    Sua única tarefa é responder à pergunta a seguir de forma objetiva e fornecer um título curto (máximo 5 palavras). 
+    A saída DEVE estar **estritamente** em formato JSON, contendo **apenas** as chaves "title" e "text". 
+    Não adicione markdown, comentários ou qualquer conteúdo fora do JSON.
 
     Exemplo:
     Pergunta: Qual a capital da França?
     Resposta: {"title": "Capital da França", "text": "A capital da França é Paris."}
 
     Pergunta: ${prompt}
-    Resposta:`;
+    Resposta:
+    `;
+
 
     try {
         const result = await model.generateContent({
