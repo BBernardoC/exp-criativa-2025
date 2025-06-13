@@ -22,19 +22,18 @@ export const createUser = (req, res) => {
         if (err) {
           return res.status(500).json({ error: err.message });
         }
-        res
-          .status(201)
-          .json({
-            message: "User created successfully",
-            userId: result.insertId,
-          });
+        res.status(201).json({
+          message: "User created successfully",
+          userId: result.insertId,
+        });
       }
     );
   });
 };
 
 export const getUserInfo = (req, res) => {
-  const query = "SELECT user_name, user_id FROM users WHERE user_id = ?";
+  const query =
+    "SELECT user_name, user_id, user_disease FROM users WHERE user_id = ?";
 
   db.query(query, [req.userId], (err, result) => {
     if (err) {
@@ -48,6 +47,7 @@ export const getUserInfo = (req, res) => {
     res.status(200).json({
       user_name: result[0].user_name,
       user_id: result[0].user_id,
+      user_dissease: result[0].user_disease,
     });
   });
 };

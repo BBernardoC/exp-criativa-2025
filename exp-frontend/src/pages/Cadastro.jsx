@@ -64,7 +64,7 @@ export default function Cadastro() {
       if (!response.ok)
         throw new Error(data.error || "Erro ao cadastrar usuário.");
 
-      window.location.href = "/search";
+      window.location.href = "/";
     } catch (err) {
       setErrorMessage(err.message);
     }
